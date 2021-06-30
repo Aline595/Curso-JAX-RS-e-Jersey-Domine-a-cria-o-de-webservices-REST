@@ -1,12 +1,17 @@
 package br.com.alura.loja.modelo;
 
-
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Produto {
 
 	private double preco;
 	private long id;
 	private String nome;
 	private int quantidade;
+	
+	Produto(){
+		
+	}
 	
 	public Produto(long id, String nome, double preco, int quantidade) {
 		this.id = id;

@@ -28,35 +28,14 @@ public class CarrinhoResource {
 	@Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_XML)// Diz que está roduzindo XML, pode ser qualquer formato json...
-    //public String busca(@QueryParam("id") long id) {
-    public String busca(@PathParam("id") long id) {
+    public Carrinho busca(@PathParam("id") long id) {
         Carrinho carrinho = new CarrinhoDAO().busca(id);
-        return carrinho.toXML();
+        return carrinho;
     }
-	
-	/*
-	//Usando Json
-    @Path("{id}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String busca(@PathParam("id") long id) {
-        Carrinho carrinho = new CarrinhoDAO().busca(id);
-        return carrinho.toJson();
-    }
-	*/
-	
-    /*@POST // Envia requisição que cria novo carrinho, necessario XMl 
-    @Produces(MediaType.APPLICATION_XML)
-    public String adiciona(String conteudo) {
-        Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
-        new CarrinhoDAO().adiciona(carrinho);
-        return "<status>sucesso</status>";
-    }*/
 	
     @POST // retorna status code
     @Consumes(MediaType.APPLICATION_XML)
-    public Response adiciona(String conteudo) {
-        Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+    public Response adiciona(Carrinho carrinho) {
         new CarrinhoDAO().adiciona(carrinho);
         URI uri = URI.create("/carrinhos/" + carrinho.getId());
         return Response.created(uri).build();
@@ -85,9 +64,8 @@ public class CarrinhoResource {
     @Path("{id}/produtos/{produtoId}/quantidade")
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
-    public Response alteraQuantidadeProduto(@PathParam("id") long id, @PathParam("produtoId") long produtoId, String conteudo) {
+    public Response alteraQuantidadeProduto(Produto produto ,@PathParam("id") long id, @PathParam("produtoId") long produtoId, String conteudo) {
         Carrinho carrinho = new CarrinhoDAO().busca(id);
-        Produto produto = (Produto) new XStream().fromXML(conteudo);
         carrinho.trocaQuantidade(produto);
         return Response.ok().build();
     }
