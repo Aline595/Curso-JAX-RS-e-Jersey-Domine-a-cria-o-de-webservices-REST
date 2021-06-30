@@ -8,11 +8,11 @@ import javax.ws.rs.core.MediaType;
 import br.com.alura.loja.dao.CarrinhoDAO;
 import br.com.alura.loja.modelo.Carrinho;
 
-@Path("carrinhos")
+@Path("carrinhos") // Define a uri que irá acessar o servidor
 public class CarrinhoResource {
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)// Diz que está roduzindo XML, pode ser qualquer formato json...
     public String busca() {
         Carrinho carrinho = new CarrinhoDAO().busca(1l);
         return carrinho.toXML();
