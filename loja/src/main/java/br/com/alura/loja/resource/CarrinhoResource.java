@@ -13,6 +13,8 @@ import br.com.alura.loja.modelo.Carrinho;
 @Path("carrinhos") // Define a uri que irá acessar o servidor
 public class CarrinhoResource {
 	
+	
+	//usando XMl
 	@Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_XML)// Diz que está roduzindo XML, pode ser qualquer formato json...
@@ -21,5 +23,15 @@ public class CarrinhoResource {
         Carrinho carrinho = new CarrinhoDAO().busca(id);
         return carrinho.toXML();
     }
-
+	
+	/*
+	//Usando Json
+    @Path("{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String busca(@PathParam("id") long id) {
+        Carrinho carrinho = new CarrinhoDAO().busca(id);
+        return carrinho.toJson();
+    }
+	*/
 }
