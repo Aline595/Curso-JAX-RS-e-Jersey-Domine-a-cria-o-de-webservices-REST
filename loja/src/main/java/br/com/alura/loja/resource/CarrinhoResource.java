@@ -2,7 +2,9 @@ package br.com.alura.loja.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import br.com.alura.loja.dao.CarrinhoDAO;
@@ -10,11 +12,13 @@ import br.com.alura.loja.modelo.Carrinho;
 
 @Path("carrinhos") // Define a uri que irá acessar o servidor
 public class CarrinhoResource {
-
+	
+	@Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_XML)// Diz que está roduzindo XML, pode ser qualquer formato json...
-    public String busca() {
-        Carrinho carrinho = new CarrinhoDAO().busca(1l);
+    //public String busca(@QueryParam("id") long id) {
+    public String busca(@PathParam("id") long id) {
+        Carrinho carrinho = new CarrinhoDAO().busca(id);
         return carrinho.toXML();
     }
 
