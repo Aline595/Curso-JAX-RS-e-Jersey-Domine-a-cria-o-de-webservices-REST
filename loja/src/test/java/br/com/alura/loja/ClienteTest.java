@@ -44,7 +44,7 @@ public class ClienteTest {
         Assert.assertTrue(conteudo.contains("<rua>Rua Vergueiro 3185")); // Define trecho que precisa ter no xml para estar correto 
     }*/
 
-	@Test
+	/*@Test
     public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
        // ResourceConfig config = new ResourceConfig().packages("br.com.alura.loja");
        // URI uri = URI.create("http://localhost:8080/");
@@ -57,6 +57,16 @@ public class ClienteTest {
         Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
 
         //server.stop();
+    }*/
+	
+	
+	@Test
+    public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8080");
+        String conteudo = target.path("/carrinhos").request().get(String.class);
+        Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+        Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
     }
 
 }
