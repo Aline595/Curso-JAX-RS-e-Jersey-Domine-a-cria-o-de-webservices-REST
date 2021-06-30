@@ -58,7 +58,7 @@ public class ProjetoResource {
         return Response.created(uri).build();
     }
 	
-	//GET: Chamamos esse tipo de requisição de idempotente, ela pode ser executada quantas vezes for, e o resultado não será alterado.
+	//GET/PUT: Chamamos esse tipo de requisição de idempotente, ela pode ser executada quantas vezes for, e o resultado não será alterado.
 	
 	@Path("{id}")
     @DELETE 

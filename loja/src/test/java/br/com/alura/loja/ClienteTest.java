@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +44,7 @@ public class ClienteTest {
         server.stop();
     }
 	
-   @Test // Define que é uma classe de teste
+  /* @Test // Define que é uma classe de teste
     public void testaQueAConexaoComOServidorFunciona() {
         Client client = ClientBuilder.newClient(); // Cria cliente para realizar a conexão
         WebTarget target = client.target("http://www.mocky.io"); // Define a URL base
@@ -74,7 +76,7 @@ public class ClienteTest {
         String conteudo = target.path("/carrinhos/1").request().get(String.class);
         Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
         Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
-    }
+    }*/
 	
 	@Test
     public void testaQueSuportaNovosCarrinhos() {
