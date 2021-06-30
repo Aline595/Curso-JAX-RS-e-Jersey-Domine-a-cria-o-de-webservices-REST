@@ -55,25 +55,5 @@ public class ProjetoTest {
         Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
         Assert.assertEquals("Minha loja", projeto.getNome());
     }
-	
-	@Test
-    public void testaStatusCode() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080");
-        Projeto projeto =  new Projeto();
-        projeto.adiciona(new Produto(314L, "Tablet", 999, 1));
-        projeto.setRua("Rua Vergueiro");
-        projeto.setCidade("Sao Paulo");
-        String xml = projeto.toXML();
-
-        Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
-
-        Response response = target.path("/carrinhos").request().post(entity);
-        Assert.assertEquals(201, response.getStatus());
-        String location = response.getHeaderString("Location");
-        String conteudo = client.target(location).request().get(String.class);
-        Assert.assertTrue(conteudo.contains("Microfone"));
-        
-    }
 
 }

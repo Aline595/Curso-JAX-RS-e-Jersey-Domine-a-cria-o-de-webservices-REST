@@ -3,6 +3,7 @@ package br.com.alura.loja.resource;
 import java.net.URI;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -57,4 +58,12 @@ public class ProjetoResource {
         return Response.created(uri).build();
     }
 	
+	//GET: Chamamos esse tipo de requisição de idempotente, ela pode ser executada quantas vezes for, e o resultado não será alterado.
+	
+	@Path("{id}")
+    @DELETE 
+    public Response removeProjeto(@PathParam("id") long id, @PathParam("Id") long Id) {
+		new ProjetoDAO().remove(id);
+        return Response.ok().build();
+    }
 }
