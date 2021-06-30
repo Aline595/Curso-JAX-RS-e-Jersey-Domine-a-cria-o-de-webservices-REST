@@ -25,13 +25,15 @@ public class ClienteTest {
 	private Client client;
 	private WebTarget target;
 	
-	@Before //antes de 
+	@Before //antes de cada teste
 	public void startaServidor() {
 		server = Servidor.inicializaServidor();
 	    //ResourceConfig config = new ResourceConfig().packages("br.com.alura.loja");
 	    //URI uri = URI.create("http://localhost:8080/");
 	    //server = GrizzlyHttpServerFactory.createHttpServer(uri, config);
-		this.client = ClientBuilder.newClient();
+		ClientConfig config = new ClientConfig();
+		config.register(new LoggingFilter());
+		this.client = ClientBuilder.newClient(config);
 		this.target = client.target("http://localhost:8080/");
 	}
  
@@ -40,16 +42,16 @@ public class ClienteTest {
         server.stop();
     }
 	
-   /* @Test // Define que é uma classe de teste
+   @Test // Define que é uma classe de teste
     public void testaQueAConexaoComOServidorFunciona() {
         Client client = ClientBuilder.newClient(); // Cria cliente para realizar a conexão
         WebTarget target = client.target("http://www.mocky.io"); // Define a URL base
         String conteudo = target.path("/v2/52aaf5deee7ba8c70329fb7d").request().get(String.class); // Define o subdiretorio no site, get faz requisisão 
         //System.out.println(conteudo); // Exibe xml(dados da página)
         Assert.assertTrue(conteudo.contains("<rua>Rua Vergueiro 3185")); // Define trecho que precisa ter no xml para estar correto 
-    }*/
+    }
 
-	/*@Test
+	@Test
     public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
        // ResourceConfig config = new ResourceConfig().packages("br.com.alura.loja");
        // URI uri = URI.create("http://localhost:8080/");
@@ -62,7 +64,7 @@ public class ClienteTest {
         Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
 
         //server.stop();
-    }*/
+    }
 	
 	
 	@Test
