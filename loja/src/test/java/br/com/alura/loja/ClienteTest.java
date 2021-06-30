@@ -1,8 +1,9 @@
 package br.com.alura.loja;
 
-import javax.swing.text.html.parser.Entity;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,6 +22,8 @@ import junit.framework.Assert;
 public class ClienteTest {
 	
 	private HttpServer server;
+	private Client client;
+	private WebTarget target;
 	
 	@Before //antes de 
 	public void startaServidor() {
@@ -28,6 +31,8 @@ public class ClienteTest {
 	    //ResourceConfig config = new ResourceConfig().packages("br.com.alura.loja");
 	    //URI uri = URI.create("http://localhost:8080/");
 	    //server = GrizzlyHttpServerFactory.createHttpServer(uri, config);
+		this.client = ClientBuilder.newClient();
+		this.target = client.target("http://localhost:8080/");
 	}
  
 	@After //Depois de cada teste executar
@@ -70,7 +75,7 @@ public class ClienteTest {
     }
 	
 	@Test
-    public void testaQueSuportaNovosCarrinhos(){
+    public void testaQueSuportaNovosCarrinhos() {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8080");
         Carrinho carrinho = new Carrinho();
@@ -82,7 +87,12 @@ public class ClienteTest {
         Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
 
         Response response = target.path("/carrinhos").request().post(entity);
-        Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+        Assert.assertEquals(201, response.getStatus());
+        //Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+        String location = response.getHeaderString("Location");
+        String conteudo = client.target(location).request().get(String.class);
+        Assert.assertTrue(conteudo.contains("Microfone"));
+        
     }
 
 }
